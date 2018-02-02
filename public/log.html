@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Форма входа HTML5 CSS3</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body>
+
+<div id="alertMessage"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Авторизация на сайте</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-3 login-box">
+                            <form role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                    <input type="text" class="form-control" id="L_email" placeholder="Имя пользователя" required autofocus />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                    <input type="password" class="form-control" id="L_password" placeholder="Ваш пароль" required />
+                                </div>
+                                <p>
+                                У вас нет аккаунта? <a href="#">Регистрация</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-offset-5">
+                            <button type="button" class="btn btn-labeled btn-success enter">
+                                <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>Войти</button>
+                            <button type="button" class="btn btn-labeled btn-danger">
+                                <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Выход</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function LogUsers(userEmail, userPassword) {
+        $.ajax({
+            url: "api/users/log",
+            contentType: "application/json",
+            method: "POST",
+            data: JSON.stringify({
+                email: userEmail,
+                password: userPassword
+            }),
+
+            success: function (data) {
+                if(data.redirect)
+                {
+                   window.location.href=data.redirect;
+                }
+                else
+                {
+                    //alert(data);
+                    document.getElementById('alertMessage').innerHTML = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p>Warning</p></div>';
+                }
+
+            }
+        })
+    }
+
+    $("body").on("click", ".enter", function () {
+        var email = document.getElementById("L_email").value;
+        var password = document.getElementById("L_password").value;
+            LogUsers(email, password);
+    })
+
+</script>
+</body>
+</html>

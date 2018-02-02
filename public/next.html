@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8">
+            <h3>Hello User</h3>
+        </div>
+        <div class="col-lg-3">
+            <button type="button" class="btn btn-sm btn-primary logout col-lg-3">Вийти</button>
+        </div>
+    </div>
+</div>
+    <script>
+
+        function LogOut() {
+            $.ajax({
+                url: "/logout",
+                method: "GET",
+
+                success: function (data) {
+                    if(data.redirect)
+                    {
+                        window.location.href=data.redirect;
+                    }
+                    else
+                    {
+                        //alert(data);
+                        document.getElementById('alertMessage').innerHTML = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p>Warning</p></div>';
+                    }
+
+                }
+            })
+        }
+
+        $("body").on("click", ".logout", function () {
+            LogOut();
+        })
+
+    </script>
+</body>
+</html>
