@@ -151,16 +151,6 @@ app.get('/logout', function (req, res) {
     res.send({redirect: '/log'});
 });
 
-// function checkSignIn(req, res){
-//     if(req.session.user){
-//         next();     //If session exists, proceed to page
-//     } else {
-//         var err = new Error("Not logged in!");
-//         console.log(req.session.user);
-//         next(err);  //Error, trying to access unauthorized page!
-//     }
-// }
-
 app.post("/api/users", jsonParser, function (req, res) {
 
     if(!req.body) return res.sendStatus(400);
